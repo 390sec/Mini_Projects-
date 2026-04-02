@@ -1,0 +1,390 @@
+import smtplib
+import time
+import random
+from email.mime.text import MIMEText
+from datetime import datetime, timedelta
+
+# 🔐 Sender
+sender_email = "mogiliakash7@gmail.com"
+password = "yshliwadezqmybkw"
+
+# 👥 Multiple receivers
+receivers = [
+    "b23159@students.iitmandi.ac.in",
+    "veeraswamymogili34@gmail.com"
+]
+
+# 💬 Random Good Night messages
+messages = [
+    [
+        "Good night! 🌙 Time to rest and recharge.",
+        "Reflect on today’s achievements.",
+        "Relax and let go of stress.",
+        "Prepare for a better tomorrow.",
+        "Sleep well! 💤"
+    ],
+    [
+        "Sweet dreams! 🌌",
+        "Leave worries behind.",
+        "Recharge your energy.",
+        "Tomorrow is a fresh start.",
+        "Rest deeply! 😴"
+    ],
+    [
+        "Night night! 🌠",
+        "Relax your mind and body.",
+        "Think of happy moments.",
+        "Let peace fill your heart.",
+        "Wake up refreshed! 🌞"
+    ],
+    [
+        "Good night! 🌙 Take a pause.",
+        "Forget the troubles of today.",
+        "Embrace calm and peace.",
+        "Dream big for tomorrow.",
+        "Sleep tight! 💫"
+    ],
+    [
+        "Time to sleep! 🛌",
+        "Rest well, recharge fully.",
+        "Tomorrow brings new chances.",
+        "Let your dreams inspire you.",
+        "Good night and sweet dreams! 🌌"
+    ],
+    [
+        "Sleep peacefully! 🌙",
+        "End the day with gratitude.",
+        "Let your mind unwind.",
+        "Recharge for a productive tomorrow.",
+        "Good night! 😴"
+    ],
+    [
+        "Good night! 🌌 Close your eyes and relax.",
+        "Forget the stress of the day.",
+        "Think positive thoughts.",
+        "Dreams create possibilities.",
+        "Wake up renewed! 🌞"
+    ],
+    [
+        "Nighty night! 💤",
+        "Let calm fill your soul.",
+        "Release today’s worries.",
+        "Rest deeply for tomorrow.",
+        "Sweet dreams! 🌠"
+    ],
+    [
+        "Good night! 🌙 Peaceful sleep awaits.",
+        "Leave behind the challenges.",
+        "Embrace serenity.",
+        "Dream and recharge.",
+        "Wake up energized! 💫"
+    ],
+    [
+        "Sleep tight! 🌌",
+        "Reflect on the good moments.",
+        "Relax completely.",
+        "Tomorrow is a new adventure.",
+        "Good night! 😴"
+    ],
+    [
+        "Time to rest! 🛌",
+        "Close your eyes peacefully.",
+        "Release all tension.",
+        "Dream big for tomorrow.",
+        "Sweet sleep! 🌠"
+    ],
+    [
+        "Good night! 🌙 Recharge your mind.",
+        "Let go of negativity.",
+        "Fill your heart with calm.",
+        "Dream about new possibilities.",
+        "Wake up refreshed! 🌞"
+    ],
+    [
+        "Night night! 🌌",
+        "Rest deeply and peacefully.",
+        "Forget today’s worries.",
+        "Embrace calm and positivity.",
+        "Good night! 😴"
+    ],
+    [
+        "Sleep well! 💤",
+        "End the day with a smile.",
+        "Relax your mind.",
+        "Prepare for a fresh start.",
+        "Sweet dreams! 🌠"
+    ],
+    [
+        "Good night! 🌙 Let peace surround you.",
+        "Forget the challenges today.",
+        "Think positive thoughts.",
+        "Recharge fully.",
+        "Wake up strong! 💫"
+    ],
+    [
+        "Time to sleep! 🛌",
+        "Relax and breathe deeply.",
+        "Release stress.",
+        "Dream of good things.",
+        "Good night! 🌌"
+    ],
+    [
+        "Sweet dreams! 🌠",
+        "End the day with gratitude.",
+        "Relax completely.",
+        "Recharge your energy.",
+        "Wake up refreshed! 🌞"
+    ],
+    [
+        "Good night! 🌙 Take a deep breath.",
+        "Release today’s worries.",
+        "Embrace calm.",
+        "Think positively.",
+        "Sleep tight! 💫"
+    ],
+    [
+        "Nighty night! 💤",
+        "Relax your body and mind.",
+        "Let go of tension.",
+        "Dream about happiness.",
+        "Wake up renewed! 🌠"
+    ],
+    [
+        "Sleep tight! 🌌",
+        "Forget the stress today.",
+        "Embrace calm and peace.",
+        "Recharge your energy.",
+        "Good night! 😴"
+    ],
+    [
+        "Good night! 🌙 Rest deeply.",
+        "Think of positive things.",
+        "End the day with gratitude.",
+        "Prepare for a better tomorrow.",
+        "Sweet dreams! 🌠"
+    ],
+    [
+        "Time to rest! 🛌",
+        "Let calm fill your heart.",
+        "Forget today’s challenges.",
+        "Dream and recharge.",
+        "Wake up energized! 🌞"
+    ],
+    [
+        "Night night! 🌌 Peaceful sleep awaits.",
+        "Release tension.",
+        "Relax completely.",
+        "Fill your mind with calm.",
+        "Good night! 💫"
+    ],
+    [
+        "Sleep well! 💤",
+        "Reflect on today’s wins.",
+        "Let go of worries.",
+        "Recharge for tomorrow.",
+        "Sweet dreams! 🌠"
+    ],
+    [
+        "Good night! 🌙 Relax deeply.",
+        "Think positively.",
+        "Embrace calm and peace.",
+        "Prepare for a fresh start.",
+        "Wake up strong! 🌞"
+    ],
+    [
+        "Time to sleep! 🛌",
+        "End the day with gratitude.",
+        "Relax completely.",
+        "Dream big for tomorrow.",
+        "Good night! 💫"
+    ],
+    [
+        "Sweet dreams! 🌌",
+        "Release today’s stress.",
+        "Fill your heart with calm.",
+        "Recharge fully.",
+        "Wake up refreshed! 😴"
+    ],
+    [
+        "Night night! 🌠",
+        "Relax and breathe deeply.",
+        "Think positive thoughts.",
+        "Dream about new possibilities.",
+        "Good night! 🌙"
+    ],
+    [
+        "Sleep tight! 💤",
+        "Let go of negativity.",
+        "End the day peacefully.",
+        "Recharge your mind.",
+        "Sweet dreams! 🌌"
+    ],
+    [
+        "Good night! 🌙 Embrace calm.",
+        "Forget the worries today.",
+        "Relax fully.",
+        "Dream of happiness.",
+        "Wake up energized! 🌞"
+    ],
+    [
+        "Time to rest! 🛌",
+        "Release tension and stress.",
+        "Let peace fill your heart.",
+        "Dream big for tomorrow.",
+        "Good night! 💫"
+    ],
+    [
+        "Sweet dreams! 🌌",
+        "End the day with positivity.",
+        "Relax deeply.",
+        "Recharge fully.",
+        "Wake up refreshed! 😴"
+    ],
+    [
+        "Night night! 🌠",
+        "Think of good moments today.",
+        "Let go of stress.",
+        "Embrace calm and peace.",
+        "Good night! 🌙"
+    ],
+    [
+        "Sleep well! 💤",
+        "Reflect on today’s wins.",
+        "Relax your body and mind.",
+        "Prepare for tomorrow.",
+        "Sweet dreams! 🌌"
+    ],
+    [
+        "Good night! 🌙 Rest peacefully.",
+        "Forget the troubles of today.",
+        "Embrace calm.",
+        "Dream big for tomorrow.",
+        "Wake up strong! 🌞"
+    ],
+    [
+        "Time to sleep! 🛌",
+        "Relax completely.",
+        "Release tension.",
+        "Think positive thoughts.",
+        "Good night! 💫"
+    ],
+    [
+        "Sweet dreams! 🌌",
+        "End the day with gratitude.",
+        "Let your mind rest.",
+        "Recharge for tomorrow.",
+        "Wake up refreshed! 😴"
+    ],
+    [
+        "Night night! 🌠",
+        "Relax your body and soul.",
+        "Think positively.",
+        "Dream about good things.",
+        "Good night! 🌙"
+    ],
+    [
+        "Sleep tight! 💤",
+        "Forget negativity.",
+        "End the day calmly.",
+        "Recharge fully.",
+        "Sweet dreams! 🌌"
+    ],
+    [
+        "Good night! 🌙 Peaceful sleep awaits.",
+        "Reflect on the day positively.",
+        "Relax your mind and body.",
+        "Dream big for tomorrow.",
+        "Wake up energized! 🌞"
+    ],
+    [
+        "Time to rest! 🛌",
+        "Release today’s tension.",
+        "Embrace calm and peace.",
+        "Dream about happiness.",
+        "Good night! 💫"
+    ],
+    [
+        "Sweet dreams! 🌌",
+        "End the day with positivity.",
+        "Relax completely.",
+        "Recharge your mind.",
+        "Wake up refreshed! 😴"
+    ],
+    [
+        "Night night! 🌠",
+        "Forget stress and worries.",
+        "Think of good moments.",
+        "Dream big for tomorrow.",
+        "Good night! 🌙"
+    ],
+    [
+        "Sleep well! 💤",
+        "Embrace calm and peace.",
+        "Release tension.",
+        "Reflect positively.",
+        "Sweet dreams! 🌌"
+    ],
+    [
+        "Good night! 🌙 Let your mind rest.",
+        "Forget today’s challenges.",
+        "Relax fully.",
+        "Dream about new possibilities.",
+        "Wake up strong! 🌞"
+    ],
+    [
+        "Time to sleep! 🛌",
+        "Release all worries.",
+        "End the day peacefully.",
+        "Recharge your energy.",
+        "Good night! 💫"
+    ]
+]
+
+# ✍️ Signature to add at the end
+signature = [
+    "               ",
+    "               ",
+    "Your's,",
+    "Akash M"
+]
+
+# ⏰ Random time between 8 PM to 10 PM
+start_time = datetime.now().replace(hour=20, minute=0, second=0, microsecond=0)
+end_time = datetime.now().replace(hour=22, minute=0, second=0, microsecond=0)
+
+# Pick random time in the window
+random_time = start_time + timedelta(seconds=random.randint(0, int((end_time - start_time).total_seconds())))
+wait_seconds = (random_time - datetime.now()).total_seconds()
+
+# Wait until random time if not already past
+if wait_seconds > 0:
+    print(f"⏳ Waiting for {int(wait_seconds // 60)} minutes...")
+    time.sleep(wait_seconds)
+else:
+    print("⚡ Time already in window, sending immediately.")
+
+# 🎯 Pick random message set
+selected_set = random.choice(messages)
+body = "\n".join(selected_set + signature)
+
+subject = "🌌 Good Night!"
+
+# 📧 Send emails
+try:
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(sender_email, password)
+
+    for receiver in receivers:
+        msg = MIMEText(body)
+        msg["Subject"] = subject
+        msg["From"] = sender_email
+        msg["To"] = receiver
+
+        server.sendmail(sender_email, receiver, msg.as_string())
+        print(f"✅ Sent to {receiver}")
+
+    server.quit()
+
+except Exception as e:
+    print("❌ Error:", e)
