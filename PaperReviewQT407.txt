@@ -1,0 +1,13 @@
+Bright Squeezed Light from a Singly Resonant Frequency Doubler
+R. Paschotta, M. Collett, ' P. Kiirz, K. Fiedler, H.A. Bachor, t and J. Mlynek
+University of Konstanz, 78/8/ Konstanz, Germany
+(Received 28 January 1994)
+We present a new technique for the efficient and simple production of amplitude-squeezed light
+with high coherent excitation, using a frequency doubler, in which only the fundamental wave is
+resonantly enhanced. Our theory predicts up to nearly 90% squeezing in the second-harmonic wave
+under ideal conditions. In our first experiment we measured up to 30% squeezing [having taken into
+account the limited quantum efficiency (63%) of our detection system] in a stable 50mW beam.
+Compared to doubly resonant &equency doubling our new approach has considerable technical
+advantages.
+
+
